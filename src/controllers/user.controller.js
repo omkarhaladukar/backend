@@ -17,14 +17,14 @@ const registerUser = asyncHandler(async (req, res) => {
     // check for user creation
     // return res
 
-    const { fullname, email, username, password } = req.body
+    const { fullName, email, username, password } = req.body
     console.log("email:", email);
 
     //    if(fullname===""){
     //     throw new ApiError(400,"fullname is required")
     //    }
     if (
-        [fullname, email, username, password].some((field) =>
+        [fullName, email, username, password].some((field) =>
             field?.trim() === "")
     ) {
         throw new ApiError(400, "All field required")
@@ -39,9 +39,12 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     const avatarLocalPath = req.files?.avatar?.[0]?.path;  // taking from multer uploaded over server in public/temp in original name
-    const coverImageLocalPath = req.files?.coverImage?.[0]?.path;
+    const coverImageLocalPath = req.files?.coverImage?.[0]?.path;  // this one make comment
 
-
+    // let coverImageLocalPath;   // when you get undefined error occur this comment  works & upper one make commet
+    // if(req.files && Arrays.isArray(req.files.coverImage) && req.files.coverImage.length>0){
+    //     coverImageLocalPath=req.files.coverImage[0].path
+    // }
 
     if (!avatarLocalPath) {
         throw new ApiError(400, "avatar file is required")
@@ -55,7 +58,7 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     const user = await User.create({
-        fullname,
+        fullName,
         avatar: avatar.url,
         coverImage: coverImage?.url || "",
         email,

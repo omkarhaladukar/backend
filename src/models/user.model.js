@@ -68,7 +68,7 @@ userSchema.methods.generateAccessToken = async function () {
             _id: this._id,
             email: this.email,
             username: this.username,
-            fullname: this.fullName
+            fullName: this.fullName
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
@@ -83,7 +83,7 @@ userSchema.methods.generateRefreshToken = async function () {
             _id: this._id,
             email: this.email,
             username: this.username,
-            fullname: this.fullName
+            fullName: this.fullName
         },
         process.env.REFRESH_TOKEN_SECRET,
         {
