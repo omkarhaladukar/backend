@@ -1,4 +1,4 @@
-const asyncHandler = (reqHandler) => {
+const asyncHandler = (reqHandler) => {   // higher order function
     return (req, res, next) => {
         Promise.resolve(reqHandler(req, res, next)).catch((err) => next(err));
     };
@@ -13,7 +13,7 @@ export { asyncHandler }
     
 // wrapper function
 
-// const asyncHandler = (fn) => async (req, res, next) => {
+// const asyncHandler = (fn) => async (req, res, next) => {  // same as upper
 //     try {
 //         await fn(req, res, next)
 //     } catch (err) {
