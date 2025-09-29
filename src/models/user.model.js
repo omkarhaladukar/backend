@@ -61,9 +61,13 @@ userSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.password)
 }
 
+// You still have them marked as async, but jwt.sign (when used without callback) is synchronous.
 
-userSchema.methods.generateAccessToken = async function () {
-    jwt.sign(
+// So those methods always return a Promise<string> instead of string.
+
+// Your login flow works because JS can resolve them, but it’s cleaner to remove async:
+userSchema.methods.generateAccessToken = function () {
+    return jwt.sign(
         {
             _id: this._id,
             email: this.email,
@@ -77,8 +81,8 @@ userSchema.methods.generateAccessToken = async function () {
     )
 }
 
-userSchema.methods.generateRefreshToken = async function () {
-    jwt.sign(
+userSchema.methods.generateRefreshToken = function () {
+    return jwt.sign(
         {
             _id: this._id,
             email: this.email,
