@@ -22,7 +22,6 @@ const varifyJWT = asyncHandler(async (req, _, next) => {
             "-password -refreshToken")
 
         if (!user) {
-            // todo discuss about frontend
             throw new ApiError(401, "Invalid access token");
         }
 

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { loginUser, registerUser, logoutUser } from '../controllers/user.controller.js';
+import { loginUser, registerUser, logoutUser, refreshAccessToken } from '../controllers/user.controller.js';
 import { upload } from "../middlewares/multer.middleware.js";
 import { varifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -23,5 +23,6 @@ router.route("/login").post(loginUser)
 
 // secure routes
 router.route("/logout").post(varifyJWT, logoutUser);
+router.route("/refresh-token").post(refreshAccessToken);  // no need to verify token here , you need to want apply
 
 export { router };  
