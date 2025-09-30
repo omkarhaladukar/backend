@@ -260,7 +260,7 @@ const upadateAccountDetails = asyncHandler(async (req, res) => {
         throw new ApiError(400, "All fields are required")
     }
 
-    const user = User.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
         req.user?._id,
         {
             $set: {
@@ -272,7 +272,7 @@ const upadateAccountDetails = asyncHandler(async (req, res) => {
     ).select("-password")
 
     return res.status(200)
-        .json(new ApiResponse200, user, "account detail updated successfully")
+        .json(new ApiResponse(200, user, "account detail updated successfully"))
 })
 
 const upadateUserAvatar = asyncHandler(async (req, res) => {
@@ -295,8 +295,8 @@ const upadateUserAvatar = asyncHandler(async (req, res) => {
                 avatar: avatar.url
             }
         },
-        { new: true }
-            .select("-password"))
+        { new: true })
+        .select("-password")
 
     return res.status(200)
         .json(new ApiResponse(200, user, "avatar updated successfully"))
@@ -323,8 +323,8 @@ const upadateUserCoverImage = asyncHandler(async (req, res) => {
                 coverImage: coverImage.url
             }
         },
-        { new: true }
-            .select("-password"))
+        { new: true })
+        .select("-password")
 
     return res.status(200)
         .json(new ApiResponse(200, user, "coverImage updated successfully"))
